@@ -23,20 +23,19 @@ public class PlayerController : MonoBehaviour {
     private bool dashActive = false;
 
     private CharacterController controller;
-    private Animator animator;
+    //private Animator animator;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
-    void Update() {
-
+    void Update()
+    {
         if (Input.GetButton("Submit"))
             isRdy = true;
 
-        
-        if(controller.isGrounded)
+        if (controller.isGrounded)
         {
             if (!dashActive)
                 moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId));
@@ -82,16 +81,12 @@ public class PlayerController : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //Rigidbody body = hit.collider.attachedRigidbody;
-        //if (body == null || body.isKinematic)
-        //    return;
-
-        GameObject other = hit.gameObject; //hit.collider.gameObject...
+        GameObject other = hit.gameObject;
         if (other)
         {
             if (other.CompareTag("Weapon"))
             {
-                other.SendMessage("ReceiveMessage", hit.gameObject.GetInstanceID());
+                //other.SendMessage("ReceiveMessage", hit.gameObject.GetInstanceID());
                 Debug.Log("Parent from Weapon is " + other.transform.parent);
                 controller.Move(new Vector3(-hit.moveDirection.x, 0, -hit.moveDirection.z) * Time.deltaTime * 100);
             }
