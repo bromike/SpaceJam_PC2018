@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HammerPush : MonoBehaviour
 {
-
+    public GameObject lookout;
     public float hammerForce = 20.0f;
     private bool dashActive = false;
 
@@ -36,7 +36,7 @@ public class HammerPush : MonoBehaviour
         cc = col.gameObject.GetComponent<CharacterController>();
         if (cc)
         {
-            dashDirection = new Vector3(-transform.right.z, 0, transform.right.x) * Time.deltaTime * hammerForce;
+            dashDirection = new Vector3(-lookout.transform.right.z, 0, lookout.transform.right.x) * Time.deltaTime * hammerForce;
             Invoke("ResetDash", dashTime / 1000.0f);
             dashActive = true;
         }

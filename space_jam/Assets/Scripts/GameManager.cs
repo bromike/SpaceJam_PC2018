@@ -234,16 +234,26 @@ public class GameManager : MonoBehaviour
         gameState.winner();
     }
 
-    public void onClickStart()
+    public void onClickStart4()
     {
-        //swapMenu();
-        //gameState.playerSelection();
         gameState.inGame();
         swapCanvasUIMenu();
         foreach (GameObject player in gameState.players)
         {
             player.transform.GetChild(0).gameObject.SetActive(true);
         }
+    }
+
+    public void onClickStart2()
+    {
+        gameState.inGame();
+        swapCanvasUIMenu();
+        for(int i = 0;i < 2;i++)
+        {
+            players[i].transform.GetChild(0).gameObject.SetActive(true);
+        }
+        players[2].gameObject.SetActive(false);
+        players[3].gameObject.SetActive(false);
     }
 
     void swapCanvasUIMenu()

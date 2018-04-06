@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
     //public float jumpSpeed = 8.0F;
     //public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
-    public int playerId = 1;
+    public int playerId = 0;
 
 //[HideInInspector]
     public bool isRdy = false;
@@ -23,24 +23,16 @@ public class PlayerController : MonoBehaviour {
     private bool dashActive = false;
 
     private CharacterController controller;
-    //private Animator animator;
+    private Animator animator;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
-        if (Input.GetButton("Submit"))
-            isRdy = true;
-<<<<<<< Updated upstream
-
-        if (controller.isGrounded)
-=======
-        
         if(controller.isGrounded)
->>>>>>> Stashed changes
         {
             if (!dashActive)
                 moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId));
@@ -86,12 +78,16 @@ public class PlayerController : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        GameObject other = hit.gameObject;
+        //Rigidbody body = hit.collider.attachedRigidbody;
+        //if (body == null || body.isKinematic)
+        //    return;
+
+        GameObject other = hit.gameObject; //hit.collider.gameObject...
         if (other)
         {
             if (other.CompareTag("Weapon"))
             {
-                //other.SendMessage("ReceiveMessage", hit.gameObject.GetInstanceID());
+                other.SendMessage("ReceiveMessage", hit.gameObject.GetInstanceID());
                 Debug.Log("Parent from Weapon is " + other.transform.parent);
                 controller.Move(new Vector3(-hit.moveDirection.x, 0, -hit.moveDirection.z) * Time.deltaTime * 100);
             }
