@@ -23,7 +23,7 @@ space_jam/*.booproj
 space_jam/*.svd
 space_jam/*.pdb
 
-space_jam/Library/*.*
+space_jam/Library/
 
 # Unity3D generated meta files
 space_jam/*.pidb.meta
