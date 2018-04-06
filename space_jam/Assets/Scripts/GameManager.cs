@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
         menu.SetActive(true);
         ui.SetActive(false);
 
+        setupMenu();
+
         for (int i = 0; i < 4; i++)
         {
             string playerName = "player_%d" + i;
@@ -206,6 +208,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnClickStart()
+    {
+        swapMenues();
+    }
+
     void swapMenues()
     {
         foreach (Button btn in ui.GetComponents<Button>())
@@ -215,8 +222,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnClickStart()
+
+    void setupMenu()
     {
-        swapMenues();
+        Image[] playerIcons = menu.GetComponentsInChildren<Image>();
+        foreach(Image icon in playerIcons)
+            if(icon.tag == "icon")
+                icon.gameObject.SetActive(false);
     }
 }
