@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameState
 {
-    public List<GameObject> players = new List<GameObject>();
+    public List<GameObject> players;
 
     public GameState() { }
 
@@ -45,6 +45,12 @@ public class GameState
         gameOn = false;
         win = false;
         startingGame = false;
+        foreach (GameObject player in players)
+        {
+            player.transform.GetChild(0).gameObject.SetActive(false);
+            player.GetComponent<CharacterController>().enabled = false;
+        }
+
     }
 
     public void inGame()
@@ -53,6 +59,11 @@ public class GameState
         atMenu = false;
         startingGame = false;
         gameOn = true;
+        foreach (GameObject player in players)
+        {
+            player.transform.GetChild(0).gameObject.SetActive(true);
+            player.GetComponent<CharacterController>().enabled = true;
+        }
     }
     public int verifyPlayerCount()
     {
@@ -92,6 +103,8 @@ public class GameState
 
 public class GameManager : MonoBehaviour
 {
+    public List<GameObject> players;
+
     public static GameManager instance;
     public static GameState gameState;
 
@@ -147,17 +160,12 @@ public class GameManager : MonoBehaviour
         ui = _ui();
         menu.SetActive(true);
         ui.SetActive(false);
-
-        setupMenu();
-
-        for (int i = 1; i <= 4; i++)
+        gameState.players = players;
+        foreach(GameObject player in players)
         {
-            string playerName = "player_" + i;
-            GameObject player = Instantiate<GameObject>(playerObj,playerPos[i-1].transform);
-            player.name = playerName;
-            player.tag = "Player";
-            gameState.players.Add(player);
+            player.transform.GetChild(0).gameObject.SetActive(false);
         }
+        setupMenu();
     }
 
     void Update()
@@ -169,15 +177,11 @@ public class GameManager : MonoBehaviour
         }
         if (gameState.startingGame)
         {
-            if (gameState.has2Player())
+            foreach (GameObject player in gameState.players)
             {
-                foreach (GameObject player in gameState.players)
-                {
-                    if (!player.GetComponent<PlayerController>().isRdy)
-                        player.SetActive(false);
-                }
-                StartPressed();
+                player.transform.GetChild(0).gameObject.SetActive(false);
             }
+            gameState.inGame();
         }
 
         if (gameState.gameOn)
@@ -199,6 +203,7 @@ public class GameManager : MonoBehaviour
                 }
                 StartCoroutine(playWinAnim());
                 gameState.winner();
+                
             }
         }
 
@@ -206,14 +211,7 @@ public class GameManager : MonoBehaviour
         {
             if (!isInAnim)
             {
-                //Reset the Body to 0
-                foreach (GameObject player in gameState.players)
-                {
-                    player.SetActive(true);
-                    player.GetComponent<PlayerController>().isRdy = false;
-                    //Deactivate playerBody and Hammer.
-                    //Reset starting position.
-                }
+                resetPlayer();
                 gameState.inMenu();
             }
         }
@@ -238,8 +236,14 @@ public class GameManager : MonoBehaviour
 
     public void onClickStart()
     {
-        swapMenu();
-        gameState.playerSelection();
+        //swapMenu();
+        //gameState.playerSelection();
+        gameState.inGame();
+        swapCanvasUIMenu();
+        foreach (GameObject player in gameState.players)
+        {
+            player.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     void swapCanvasUIMenu()
@@ -317,6 +321,16 @@ public class GameManager : MonoBehaviour
             gameState.startGame();
             menu.SetActive(false);
             ui.SetActive(true);
+        }
+    }
+
+    void resetPlayer()
+    {
+        foreach(GameObject player in players)
+        {
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = playerPos[player.GetComponent<PlayerController>().playerId-1].position;
+            player.SetActive(true);
         }
     }
 
