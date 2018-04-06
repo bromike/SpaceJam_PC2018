@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - startMenuBtn
+  - icon
   - Weapon
-  - Floor
   layers:
   - Default
   - TransparentFX

@@ -36,7 +36,7 @@ public class GameState
         gameOn = false;
         win = true;
         atMenu = false;
-        startingGame = true;
+        startingGame = false;
     }
 
     public void inMenu()
@@ -100,6 +100,10 @@ public class GameManager : MonoBehaviour
     public GameObject arena;
     public GameObject lightningStrike;
 
+    public Transform[] playerPos;
+
+    public GameObject playerObj;
+
     bool lightning = false;
     bool isInAnim = false;
 
@@ -149,10 +153,8 @@ public class GameManager : MonoBehaviour
         for (int i = 1; i <= 4; i++)
         {
             string playerName = "player_" + i;
-            GameObject player = new GameObject(playerName);
-            PlayerController control = player.AddComponent<PlayerController>();
-            control.playerId = i;
-            control.isRdy = false;
+            GameObject player = Instantiate<GameObject>(playerObj,playerPos[i-1].transform);
+            player.name = playerName;
             player.tag = "Player";
             gameState.players.Add(player);
         }
@@ -174,7 +176,6 @@ public class GameManager : MonoBehaviour
                     if (!player.GetComponent<PlayerController>().isRdy)
                         player.SetActive(false);
                 }
-                gameState.startGame();
                 StartPressed();
             }
         }
@@ -209,7 +210,9 @@ public class GameManager : MonoBehaviour
                 foreach (GameObject player in gameState.players)
                 {
                     player.SetActive(true);
-                    //player.3dBody.SetActive(false);
+                    player.GetComponent<PlayerController>().isRdy = false;
+                    //Deactivate playerBody and Hammer.
+                    //Reset starting position.
                 }
                 gameState.inMenu();
             }
@@ -309,9 +312,9 @@ public class GameManager : MonoBehaviour
 
     public void StartPressed()
     {
-        if (Input.GetButton("Start"))
+        if (Input.GetButton("Start") && gameState.startingGame)
         {
-            gameState.playerSelection();
+            gameState.startGame();
             menu.SetActive(false);
             ui.SetActive(true);
         }
@@ -364,7 +367,7 @@ public class GameManager : MonoBehaviour
         {
             y = 2;
             winner.rectTransform.Translate(0, -y, 0);
-            if (winner.rectTransform.position.y <= 150)
+            if (winner.rectTransform.position.y <= 305)
             {
                 winner.rectTransform.position = new Vector3(winner.rectTransform.position.x, winner.rectTransform.position.y, winner.rectTransform.position.z);
                 break;

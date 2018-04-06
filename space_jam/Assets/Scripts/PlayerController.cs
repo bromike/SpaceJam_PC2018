@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 moveDirection = Vector3.zero;
     public int playerId = 1;
 
-    [HideInInspector]
+//[HideInInspector]
     public bool isRdy = false;
 
     // TODO: put these in common class (GameManager?)
@@ -34,8 +34,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButton("Submit"))
             isRdy = true;
+<<<<<<< Updated upstream
 
         if (controller.isGrounded)
+=======
+        
+        if(controller.isGrounded)
+>>>>>>> Stashed changes
         {
             if (!dashActive)
                 moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId));
