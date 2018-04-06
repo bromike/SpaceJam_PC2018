@@ -9,8 +9,13 @@ public class PlayerController : MonoBehaviour {
     //public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
     public int playerId = 1;
+    public bool isRdy = false;
 
     void Update() {
+
+        if (Input.GetButton("Submit"))
+            isRdy = true;
+
         CharacterController controller = GetComponent<CharacterController>();
 
         moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId));

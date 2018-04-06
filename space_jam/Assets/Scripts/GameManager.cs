@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             return count;
         }
 
-        public GameObject getLastPlayer()
+        public GameObject getLastAlivePlayer()
         {
             foreach (GameObject player in players)
             {
@@ -61,6 +61,20 @@ public class GameManager : MonoBehaviour
                     return player;
             }
             return null;
+        }
+
+        public bool has2Player()
+        {
+            int count = 0;
+            foreach (GameObject player in players)
+            {
+                PlayerController ctrl = player.GetComponent<PlayerController>();
+                if (ctrl.isRdy)
+                    count++;
+                if (count >= 2)
+                    return true;
+            }
+            return false;
         }
     }
 
@@ -115,17 +129,22 @@ public class GameManager : MonoBehaviour
             string playerName = "player_%d" + i;
             GameObject player = new GameObject(playerName);
             PlayerController control = player.AddComponent<PlayerController>();
-            
-
+            control.playerId = i;
+            player.tag = "Player";
         }
     }
-    
+
     void Update()
     {
         if (gameState.atMenu)
         {
-            if(gameState.startingGame)
+            if (gameState.startingGame && gameState.has2Player())
             {
+                foreach (GameObject player in gameState.players)
+                {
+                    if (!player.GetComponent<PlayerController>().isRdy)
+                        player.SetActive(false);
+                }
                 gameState.startGame();
             }
         }
@@ -134,7 +153,7 @@ public class GameManager : MonoBehaviour
         {
             if (gameState.verifyPlayerCount() == 1)
             {
-                GameObject winPlayer = gameState.getLastPlayer();
+                GameObject winPlayer = gameState.getLastAlivePlayer();
                 if (winPlayer != null)
                 {
                     gameState.win = true;
@@ -151,7 +170,12 @@ public class GameManager : MonoBehaviour
 
         if (gameState.win)
         {
-
+            //Reset the Body to 0
+            foreach (GameObject player in gameState.players)
+            {
+                player.SetActive(true);
+                //player.3dBody.SetActive(false);
+            }
         }
     }
 
@@ -165,7 +189,7 @@ public class GameManager : MonoBehaviour
 
     void playNoContestAnim()
     {
-        ui.GetComponentInChildren<Image>(); 
+        ui.GetComponentInChildren<Image>();
     }
 
     void swapCanvasUIMenu()
@@ -184,7 +208,7 @@ public class GameManager : MonoBehaviour
 
     void swapMenues()
     {
-        foreach(Button btn in ui.GetComponents<Button>())
+        foreach (Button btn in ui.GetComponents<Button>())
         {
             if (btn.tag == "startMenuBtn")
                 btn.GetComponent<GameObject>().SetActive(!btn.GetComponent<Button>().IsActive());
