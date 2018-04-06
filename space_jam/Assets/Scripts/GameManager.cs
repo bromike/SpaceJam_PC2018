@@ -349,11 +349,11 @@ public class GameManager : MonoBehaviour
         if (!lightning)
             lightning = true;
 
-        int freq = 2;
+        int freq = 20;
         while (lightning)
         {
             float x, y, z;
-            float range = 8;
+            float range = 4;
             x = arena.transform.position.x + Random.Range(-range, range);
             y = arena.transform.position.y + 10;
             z = arena.transform.position.z + Random.Range(-range, range);
