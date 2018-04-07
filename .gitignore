@@ -10,6 +10,8 @@ space_jam/Library/*
 /space_jam/Library/
 /space_jam/Library
 space_jam/Library/
+space_jam/Library/metadata/
+space_jam/Library/FacebookSDK/
 
 # Visual Studio 2015 cache directory
 space_jam/.vs/
