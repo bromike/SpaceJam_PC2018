@@ -119,14 +119,24 @@ public class GameManager : MonoBehaviour
     public static GameObject menu;
     public static GameObject ui;
     public GameObject arena;
+
     public GameObject lightningStrike;
+    public int scorchTime;
+    public int variantionRange;
+    public int strikeFreqStage1;
+    public int strikeFreqStage2;
+    public int strikeFreqStage3;
+    public int stageTime1;
+    public int stageTime2;
+    public int stageTime3;
 
     public Transform[] playerPos;
-
     public GameObject playerObj;
 
     bool lightning = false;
     bool isInAnim = false;
+    
+
 
     GameManager _instance()
     {
@@ -211,7 +221,7 @@ public class GameManager : MonoBehaviour
                 }
                 StartCoroutine(playWinAnim());
                 gameState.winner();
-                
+                lightning = !lightning;
             }
         }
 
@@ -358,28 +368,37 @@ public class GameManager : MonoBehaviour
         if (!lightning)
             lightning = true;
 
-        int freq = 20;
+        int freq = strikeFreqStage1;
         while (lightning)
         {
-            float x, y, z;
-            float range = 4;
-            x = arena.transform.position.x + Random.Range(-range, range);
-            y = arena.transform.position.y + 10;
-            z = arena.transform.position.z + Random.Range(-range, range);
-            Vector3 pos = new Vector3(x, y, z);
-            
-            if (Time.time > 30.0 && Time.time < 60.0)
+            lightningStrike.GetComponent<lightningStrike>().duration = scorchTime;
+            Vector3 pos = Vector3.zero;
+            Random.InitState((int)Time.time*10);
+            Vector3 variation = new Vector3(Random.Range(-variantionRange, variantionRange), 0, Random.Range(-variantionRange, variantionRange));
+            int num = 0;
+            foreach (GameObject player in players)
+            {
+                if (player.activeInHierarchy)
+                {
+                    num++;
+                    pos += player.transform.position;
+                }
+            }
+            pos /= num;
+            pos += variation;
+            pos.y = 0;
+            if (Time.time > stageTime1 && Time.time < stageTime2)
             {
                 Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
             }
-            else if (Time.time > 60.0 && Time.time < 90.0)
+            else if (Time.time > stageTime2 && Time.time < stageTime3)
             {
-                freq = 1;
+                freq = strikeFreqStage2;
                 Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
             }
-            else if(Time.time > 90)
+            else if(Time.time > stageTime3)
             {
-                freq = 1;
+                freq = strikeFreqStage3;
                 Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
             }
 

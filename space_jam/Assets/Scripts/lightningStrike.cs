@@ -5,23 +5,24 @@ using UnityEngine;
 public class lightningStrike : MonoBehaviour
 {
     CharacterController cc;
-    public GameObject scorchMark;
-    public float hammerForce = 20.0f;
-    private bool dashActive = false;
+    public float pushForce = 20.0f;
+    private bool pushActive = false;
 
-    public float dashTime = 250.0f;   // in ms
-    private Vector3 dashDirection = Vector3.zero;
+    public float pushTime = 250.0f;   // in ms
+    private Vector3 pushDirection = Vector3.zero;
+    public int duration; //in ms.
 
     private void Start()
     {
-        Instantiate(scorchMark, transform.position, transform.rotation);
+        Invoke("finished", duration / 1000.0f);
     }
-    
+
     void Update()
     {
-        if (dashActive && cc)
+        if (pushActive && cc)
         {
-            cc.Move(dashDirection);
+            cc.Move(pushDirection);
+            Debug.Log("pushed");
         }
     }
 
@@ -30,15 +31,21 @@ public class lightningStrike : MonoBehaviour
         cc = col.gameObject.GetComponent<CharacterController>();
         if (cc)
         {
-            dashDirection = new Vector3(-cc.velocity.normalized.x, 0, -cc.velocity.normalized.z) * Time.deltaTime * hammerForce;
-            Invoke("ResetDash", dashTime / 1000.0f);
-            dashActive = true;
+            GameObject parent = col.transform.root.gameObject;
+            pushDirection = new Vector3(parent.transform.position.x, 0, parent.transform.position.z) * Time.deltaTime * pushForce;
+            pushActive = true;
+            Invoke("stopPush", pushTime / 1000.0f);
         }
     }
-    void ResetDash()
+
+    void finished()
     {
-        dashActive = false;
+        Destroy(gameObject);
+    }
+
+    void stopPush()
+    {
+        pushActive = false;
         cc = null;
-        // Animator: reset bool/trigger here
     }
 }
