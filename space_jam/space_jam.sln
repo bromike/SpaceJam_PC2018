@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space_jam", "space_jam.csproj", "{339A2D8E-D1DF-067B-9E99-53204D5CE4C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space_jam.Plugins", "space_jam.Plugins.csproj", "{4B29D85D-AD47-C36B-189D-233CDB9A7ECB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space_jam.Editor", "space_jam.Editor.csproj", "{0D9F13A2-7655-9F1B-0260-642A53E840D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{339A2D8E-D1DF-067B-9E99-53204D5CE4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{339A2D8E-D1DF-067B-9E99-53204D5CE4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{339A2D8E-D1DF-067B-9E99-53204D5CE4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B29D85D-AD47-C36B-189D-233CDB9A7ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B29D85D-AD47-C36B-189D-233CDB9A7ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B29D85D-AD47-C36B-189D-233CDB9A7ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B29D85D-AD47-C36B-189D-233CDB9A7ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D9F13A2-7655-9F1B-0260-642A53E840D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D9F13A2-7655-9F1B-0260-642A53E840D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D9F13A2-7655-9F1B-0260-642A53E840D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D9F13A2-7655-9F1B-0260-642A53E840D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

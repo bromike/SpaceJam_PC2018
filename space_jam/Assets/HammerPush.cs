@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class HammerPush : MonoBehaviour
 {
-    public GameObject lookout;
-    public float hammerForce = 20.0f;
+    private GameObject parent;
+    private Vector3 dashDirection = Vector3.zero;
     private bool dashActive = false;
+    private CharacterController cc;
 
     public float dashTime = 250.0f;   // in ms
-    private Vector3 dashDirection = Vector3.zero;
+    public float hammerForce = 20.0f;
 
-    CharacterController cc;
+    private void Start()
+    {
+        parent = transform.root.gameObject;
+    }
 
     void OnCollisionEnter(Collision col)
     {
@@ -34,9 +38,12 @@ public class HammerPush : MonoBehaviour
     void OnTriggerEnter(Collider col)
     {
         cc = col.gameObject.GetComponent<CharacterController>();
+        if (cc == parent.gameObject.GetComponent<CharacterController>())
+            return;
+
         if (cc)
         {
-            dashDirection = new Vector3(-lookout.transform.right.z, 0, lookout.transform.right.x) * Time.deltaTime * hammerForce;
+            dashDirection = new Vector3(-parent.transform.right.z, 0, parent.transform.right.x) * Time.deltaTime * hammerForce;
             Invoke("ResetDash", dashTime / 1000.0f);
             dashActive = true;
         }

@@ -101,8 +101,16 @@ public class GameState
     }
 }
 
+[System.Serializable]
+public class HammerData
+{
+    public float dashTime = 250.0f;   // in ms
+    public float hammerForce = 20.0f;
+}
+
 public class GameManager : MonoBehaviour
 {
+    public HammerData hammerData;
     public List<GameObject> players;
 
     public static GameManager instance;
@@ -340,6 +348,7 @@ public class GameManager : MonoBehaviour
         {
             player.GetComponent<CharacterController>().enabled = false;
             player.transform.position = playerPos[player.GetComponent<PlayerController>().playerId-1].position;
+            player.transform.rotation = playerPos[player.GetComponent<PlayerController>().playerId-1].rotation;
             player.SetActive(true);
         }
     }

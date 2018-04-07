@@ -1,0 +1,202 @@
+fileFormatVersion: 2
+guid: 71f0e5115eb0dea40b5b27cc91bef791
+timeCreated: 1523102689
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Bone002
+    100002: Bone003
+    100004: Bone004
+    100006: Bone006
+    100008: Bone007
+    100010: Bone009
+    100012: Bone010
+    100014: Bone011
+    100016: Bone012
+    100018: Bone013
+    100020: Bone014
+    100022: Bone015
+    100024: Bone016
+    100026: Bone017
+    100028: Bone018
+    100030: Bone020
+    100032: Bone021
+    100034: Bone022
+    100036: Bone023
+    100038: Bone024
+    100040: Bone025
+    100042: Bone026
+    100044: Bone027
+    100046: Bone028
+    100048: Bone029
+    100050: Bone030
+    100052: Bone032
+    100054: Bone033
+    100056: Bone034
+    100058: Bone036
+    100060: Bone037
+    100062: Bone038
+    100064: Bone039
+    100066: Bone040
+    100068: Bone042
+    100070: Bone043
+    100072: Bone044
+    100074: Bone045
+    100076: Dummy001
+    100078: Dummy002
+    100080: Dummy003
+    100082: Dummy004
+    100084: Foot_L
+    100086: Foot_R
+    100088: Hand_L
+    100090: Hand_R
+    100092: Head
+    100094: IK Chain001
+    100096: IK Chain002
+    100098: IK Chain003
+    100100: IK Chain004
+    100102: Jaw
+    100104: Pelvis
+    100106: //RootNode
+    100108: Player_Mesh
+    400000: Bone002
+    400002: Bone003
+    400004: Bone004
+    400006: Bone006
+    400008: Bone007
+    400010: Bone009
+    400012: Bone010
+    400014: Bone011
+    400016: Bone012
+    400018: Bone013
+    400020: Bone014
+    400022: Bone015
+    400024: Bone016
+    400026: Bone017
+    400028: Bone018
+    400030: Bone020
+    400032: Bone021
+    400034: Bone022
+    400036: Bone023
+    400038: Bone024
+    400040: Bone025
+    400042: Bone026
+    400044: Bone027
+    400046: Bone028
+    400048: Bone029
+    400050: Bone030
+    400052: Bone032
+    400054: Bone033
+    400056: Bone034
+    400058: Bone036
+    400060: Bone037
+    400062: Bone038
+    400064: Bone039
+    400066: Bone040
+    400068: Bone042
+    400070: Bone043
+    400072: Bone044
+    400074: Bone045
+    400076: Dummy001
+    400078: Dummy002
+    400080: Dummy003
+    400082: Dummy004
+    400084: Foot_L
+    400086: Foot_R
+    400088: Hand_L
+    400090: Hand_R
+    400092: Head
+    400094: IK Chain001
+    400096: IK Chain002
+    400098: IK Chain003
+    400100: IK Chain004
+    400102: Jaw
+    400104: Pelvis
+    400106: //RootNode
+    400108: Player_Mesh
+    2100000: 'Material #3'
+    4300000: Player_Mesh
+    7400000: ANIM_FROG_DASH_2016
+    9500000: //RootNode
+    13700000: Player_Mesh
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

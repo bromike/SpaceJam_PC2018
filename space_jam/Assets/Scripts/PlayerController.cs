@@ -13,20 +13,31 @@ public class PlayerController : MonoBehaviour {
     public bool isRdy = false;
 
     // TODO: put these in common class (GameManager?)
-    public float gravity = 20.0F;
+    private float gravity = 20.0F;
     public float speed = 6.0F;
-    public float cooldownTime = 1000.0f;    // in ms
-    public float dashSpeed = 50.0f;
-    public float dashTime = 50.0f;          // in ms
+   
+    public float smashCooldownTime = 1100f; // in ms
+    public float smashSpeed = 0.35f;
+    public float smashTime = 900f;          // in ms
 
-    private bool cooldown = false;
+    public float dashCooldownTime = 2000f;  // in ms
+    public float dashSpeed = 25f;
+    public float dashTime= 50f;             // in ms
+    public float otherDashSpeed = 6.0f;
+
+    private bool dashCooldown = false;
     private bool dashActive = false;
+    private bool smashCooldown = false;
+    private bool smashActive = false;
+    private bool actionCooldown = false;
 
     private CharacterController controller;
+    private Collider hammerCollider;
     private Animator animator;
 
     void Start()
     {
+        hammerCollider = this.GetComponentInChildren<HammerPush>().gameObject.GetComponent<Collider>();
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
@@ -34,23 +45,50 @@ public class PlayerController : MonoBehaviour {
     {
         if(controller.isGrounded)
         {
+            if (smashCooldown)
+                moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId)) * 0.25f;
+
             if (!dashActive)
                 moveDirection = new Vector3(Input.GetAxis("Horizontal_" + playerId), 0, Input.GetAxis("Vertical_" + playerId));
 
             if (moveDirection != Vector3.zero)
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection.normalized), 0.15f);
-
-            if (Input.GetButton("Fire1_" + playerId) && !cooldown)
             {
-                Invoke("ResetCooldown", cooldownTime / 1000.0f);
-                cooldown = true;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection.normalized), 0.15f);
+                if(animator.GetBool("walking") == false)
+                    animator.SetBool("walking", true);
+            }
+            else
+            {
+                if (animator.GetBool("walking") == true)
+                    animator.SetBool("walking", false);
+            }
+                
+
+            if (Input.GetButton("Fire1_" + playerId) && !dashCooldown && !actionCooldown) //dash
+            {
+                Invoke("ActionCooldown", 0.5f);
+                actionCooldown = true;
+                animator.SetTrigger("dash");
+                Invoke("ResetDashCooldown", dashCooldownTime / 1000.0f);
+                dashCooldown = true;
                 Invoke("ResetDash", dashTime / 1000.0f);
                 dashActive = true;
             }
 
+            if(Input.GetButton("Smash_" + playerId) && !smashCooldown && !actionCooldown) //smash
+            {
+                Invoke("ActionCooldown", 1.2f);
+                actionCooldown = true;
+                hammerCollider.enabled = true;
+                animator.SetTrigger("smash");
+                Invoke("ResetSmashCooldown", smashCooldownTime / 1000.0f);
+                smashCooldown = true;
+                Invoke("ResetSmash", smashTime / 1000.0f);
+                smashActive = true;
+            }
+
             if (dashActive)
             {
-                // Animator: set bool/trigger here
                 controller.Move(new Vector3(-transform.right.z, 0, transform.right.x) * dashSpeed * Time.deltaTime);
                 return;
             }
@@ -60,15 +98,30 @@ public class PlayerController : MonoBehaviour {
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
     }
+    void ActionCooldown()
+    {
+        actionCooldown = false;
+    }
     void ResetDash()
     {
         dashActive = false;
         // Animator: reset bool/trigger here
     }
-    void ResetCooldown()
+    void ResetDashCooldown()
     {
         // Cooldown UI : hide here
-        cooldown = false;
+        dashCooldown = false;
+    }
+
+    void ResetSmash()
+    {
+        hammerCollider.enabled = false;
+        smashActive = false;
+        // Animator: reset bool/trigger here
+    }
+    void ResetSmashCooldown()
+    {
+        smashCooldown = false;
     }
 
     void OnCollisionEnter (Collision col)
@@ -94,7 +147,7 @@ public class PlayerController : MonoBehaviour {
             CharacterController otherController = other.GetComponent<CharacterController>();
             if(otherController)
             {
-                otherController.Move(new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * Time.deltaTime * speed);
+                otherController.Move(new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * Time.deltaTime * otherDashSpeed);
             }
         }
     }

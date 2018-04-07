@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4072692946643370}
   - component: {fileID: 33783143513313574}
   - component: {fileID: 23445556438812094}
-  - component: {fileID: 64352899931338604}
   - component: {fileID: 114601995151323770}
+  - component: {fileID: 136592343782293770}
   m_Layer: 0
   m_Name: lightningStrike
   m_TagString: Untagged
@@ -84,20 +84,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1444487797106080}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64352899931338604
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1444487797106080}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: -1
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114601995151323770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,3 +95,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cb0870531e63a4095f91966abb5fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookout: {fileID: 0}
+  hammerForce: 20
+  dashTime: 250
+--- !u!136 &136592343782293770
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1444487797106080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
