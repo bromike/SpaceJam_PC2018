@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour {
     private bool smashActive = false;
     private bool actionCooldown = false;
 
-    private CharacterController controller;
-    private Collider hammerCollider;
+    public CharacterController controller;
+    public  Collider hammerCollider;
     private Animator animator;
 
     void Start()
@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButton("Fire1_" + playerId) && !dashCooldown && !actionCooldown) //dash
             {
                 GetComponent<AudioSource>().PlayOneShot(audioDash[Random.Range(0, audioDash.Count - 1)]);
+                
                 Invoke("ActionCooldown", 1f);
                 actionCooldown = true;
                 animator.SetTrigger("dash");
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour {
                 
                 Invoke("ActionCooldown", 1.2f);
                 actionCooldown = true;
-                
+                hammerCollider.enabled = true;
                 animator.SetTrigger("smash");
                 Invoke("ResetSmashCooldown", smashCooldownTime / 1000.0f);
                 smashCooldown = true;

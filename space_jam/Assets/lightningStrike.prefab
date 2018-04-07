@@ -95,9 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cb0870531e63a4095f91966abb5fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookout: {fileID: 0}
-  hammerForce: 20
-  dashTime: 250
+  pushForce: 20
+  pushTime: 250
+  duration: 5000
 --- !u!136 &136592343782293770
 CapsuleCollider:
   m_ObjectHideFlags: 1

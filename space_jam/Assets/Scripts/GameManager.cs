@@ -136,7 +136,8 @@ public class GameManager : MonoBehaviour
 
     bool lightning = false;
     bool isInAnim = false;
-    
+    float now = 0;
+
     GameManager _instance()
     {
         if (instance == null)
@@ -256,6 +257,7 @@ public class GameManager : MonoBehaviour
 
     public void onClickStart4()
     {
+        now = 0;
         GetComponent<AudioSource>().clip = audioClips[1];
         GetComponent<AudioSource>().Play();
 
@@ -271,6 +273,7 @@ public class GameManager : MonoBehaviour
 
     public void onClickStart2()
     {
+        now = 0;
         gameState.inGame();
         swapCanvasUIMenu();
         for(int i = 0;i < 2;i++)
@@ -385,10 +388,12 @@ public class GameManager : MonoBehaviour
         if (!lightning)
             lightning = true;
 
+        now = 0;
         int freq = strikeFreqStage1;
         while (lightning)
         {
-            lightningStrike.GetComponent<lightningStrike>().duration = scorchTime;
+            if(lightningStrike)
+                lightningStrike.GetComponent<lightningStrike>().duration = scorchTime;
             Vector3 pos = Vector3.zero;
             Random.InitState((int)Time.time*10);
             Vector3 variation = new Vector3(Random.Range(-variantionRange, variantionRange), 0, Random.Range(-variantionRange, variantionRange));
@@ -403,25 +408,9 @@ public class GameManager : MonoBehaviour
             }
             pos /= num;
             pos += variation;
-            pos.y = 0;
-            if (Time.time > stageTime1 && Time.time < stageTime2)
-            {
-                Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
-            }
-            else if (Time.time > stageTime2 && Time.time < stageTime3)
-            {
-                freq = strikeFreqStage2;
-                Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
-            }
-            else if(Time.time > stageTime3)
-            {
-                freq = strikeFreqStage3;
-                Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
-            }
-
-            //Debug
-            //Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
-
+            pos.y = 0.5f;
+            Instantiate<GameObject>(lightningStrike, pos, new Quaternion(0, 0, 0, 0));
+            
             yield return new WaitForSeconds(freq);
         }
     }

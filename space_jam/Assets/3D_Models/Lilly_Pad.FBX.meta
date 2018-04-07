@@ -13,10 +13,13 @@ ModelImporter:
     400004: Lilly_Pad_mesh
     2100000: 'Material #25'
     2100002: No Name
+    2100004: 'Material #26'
     2300000: Lilly_Pad_collider
     2300002: Lilly_Pad_mesh
+    2300004: //RootNode
     3300000: Lilly_Pad_collider
     3300002: Lilly_Pad_mesh
+    3300004: //RootNode
     4300000: Lilly_Pad_mesh
     4300002: Lilly_Pad_collider
   externalObjects: {}
