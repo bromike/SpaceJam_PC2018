@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
 {
     public HammerData hammerData;
     public List<GameObject> players;
+    public List<AudioClip> audioClips;
 
     public static GameManager instance;
     public static GameState gameState;
@@ -136,8 +137,6 @@ public class GameManager : MonoBehaviour
     bool lightning = false;
     bool isInAnim = false;
     
-
-
     GameManager _instance()
     {
         if (instance == null)
@@ -188,6 +187,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (!GetComponent<AudioSource>().isPlaying)
+            GetComponent<AudioSource>().Play();
+
         if (gameState.atMenu)
         {
             StopAllCoroutines();
@@ -254,12 +256,17 @@ public class GameManager : MonoBehaviour
 
     public void onClickStart4()
     {
+        GetComponent<AudioSource>().clip = audioClips[1];
+        GetComponent<AudioSource>().Play();
+
         gameState.inGame();
         swapCanvasUIMenu();
         foreach (GameObject player in gameState.players)
         {
             player.transform.GetChild(0).gameObject.SetActive(true);
         }
+
+        GetComponent<AudioSource>().clip = audioClips[1];
     }
 
     public void onClickStart2()
@@ -272,6 +279,9 @@ public class GameManager : MonoBehaviour
         }
         players[2].gameObject.SetActive(false);
         players[3].gameObject.SetActive(false);
+
+        GetComponent<AudioSource>().clip = audioClips[1];
+        GetComponent<AudioSource>().Play();
     }
 
     void swapCanvasUIMenu()
@@ -319,6 +329,13 @@ public class GameManager : MonoBehaviour
                 icon.gameObject.SetActive(false);
 
         gameState.inMenu();
+        if(GetComponent<AudioSource>().clip == audioClips[1])
+        {
+            GetComponent<AudioSource>().Stop();
+            GetComponent<AudioSource>().clip = audioClips[0];
+            GetComponent<AudioSource>().Play();
+        }
+
     }
 
     public void activatePlayerRdyIcon(int playerId)

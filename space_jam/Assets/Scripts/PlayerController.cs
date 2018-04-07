@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviour {
     private Vector3 moveDirection = Vector3.zero;
     public int playerId = 0;
 
-//[HideInInspector]
+    public List<AudioClip> audioWalks;
+    public List<AudioClip> audioHammer;
+    public List<AudioClip> audioDash;
+
+    //[HideInInspector]
     public bool isRdy = false;
 
     // TODO: put these in common class (GameManager?)
@@ -45,6 +49,8 @@ public class PlayerController : MonoBehaviour {
     }
     void Update()
     {
+        Random.InitState((int)Time.time * 10);
+
         if(controller.isGrounded)
         {
             if (smashCooldown)
@@ -55,6 +61,9 @@ public class PlayerController : MonoBehaviour {
 
             if (moveDirection != Vector3.zero)
             {
+                if (!GetComponent<AudioSource>().isPlaying)
+                    GetComponent<AudioSource>().PlayOneShot(audioWalks[Random.Range(0,audioWalks.Count-1)]);
+                
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection.normalized), 0.15f);
                 if(animator.GetBool("walking") == false)
                     animator.SetBool("walking", true);
@@ -68,6 +77,7 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetButton("Fire1_" + playerId) && !dashCooldown && !actionCooldown) //dash
             {
+                GetComponent<AudioSource>().PlayOneShot(audioDash[Random.Range(0, audioDash.Count - 1)]);
                 Invoke("ActionCooldown", 1f);
                 actionCooldown = true;
                 animator.SetTrigger("dash");
@@ -79,13 +89,15 @@ public class PlayerController : MonoBehaviour {
 
             if(Input.GetButton("Smash_" + playerId) && !smashCooldown && !actionCooldown) //smash
             {
+                
                 Invoke("ActionCooldown", 1.2f);
                 actionCooldown = true;
-                hammerCollider.enabled = true;
+                
                 animator.SetTrigger("smash");
                 Invoke("ResetSmashCooldown", smashCooldownTime / 1000.0f);
                 smashCooldown = true;
                 Invoke("ResetSmash", smashTime / 1000.0f);
+                Invoke("playSmashSound", 500f / 1000f);
                 smashActive = true;
             }
 
@@ -121,6 +133,10 @@ public class PlayerController : MonoBehaviour {
         hammerCollider.enabled = false;
         smashActive = false;
         // Animator: reset bool/trigger here
+    }
+    void playSmashSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(audioHammer[Random.Range(0, audioHammer.Count-1)]);
     }
     void ResetSmashCooldown()
     {
