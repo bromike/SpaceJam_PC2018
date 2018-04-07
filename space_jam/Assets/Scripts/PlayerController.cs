@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour {
     // TODO: put these in common class (GameManager?)
     private float gravity = 20.0F;
     public float speed = 6.0F;
-   
+    [Range(1.0f, 5.0f)]
+    public float zSpeed = 1.0f;
+
     public float smashCooldownTime = 1100f; // in ms
     public float smashSpeed = 0.35f;
     public float smashTime = 900f;          // in ms
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetButton("Fire1_" + playerId) && !dashCooldown && !actionCooldown) //dash
             {
-                Invoke("ActionCooldown", 0.5f);
+                Invoke("ActionCooldown", 1f);
                 actionCooldown = true;
                 animator.SetTrigger("dash");
                 Invoke("ResetDashCooldown", dashCooldownTime / 1000.0f);
@@ -93,6 +95,7 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
             moveDirection *= speed;
+            moveDirection.z *= zSpeed;
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
@@ -147,7 +150,7 @@ public class PlayerController : MonoBehaviour {
             CharacterController otherController = other.GetComponent<CharacterController>();
             if(otherController)
             {
-                otherController.Move(new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * Time.deltaTime * otherDashSpeed);
+                //otherController.Move(new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * Time.deltaTime * otherDashSpeed);
             }
         }
     }
