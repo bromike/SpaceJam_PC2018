@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     public float dashSpeed = 25f;
     public float dashTime= 50f;             // in ms
     public float otherDashSpeed = 6.0f;
+    public float turnTime = 0.15f;
 
     private bool dashCooldown = false;
     private bool dashActive = false;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour {
 
             if (moveDirection != Vector3.zero)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection.normalized), 0.15f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection.normalized), turnTime);
                 if(animator.GetBool("walking") == false)
                     animator.SetBool("walking", true);
             }
@@ -91,7 +92,7 @@ public class PlayerController : MonoBehaviour {
 
             if (dashActive)
             {
-                controller.Move(new Vector3(-transform.right.z, 0, transform.right.x) * dashSpeed * Time.deltaTime);
+                controller.Move(new Vector3(-transform.right.z * zSpeed, 0, transform.right.x) * dashSpeed * Time.deltaTime);
                 return;
             }
             moveDirection *= speed;
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour {
             {
                 other.SendMessage("ReceiveMessage", hit.gameObject.GetInstanceID());
                 Debug.Log("Parent from Weapon is " + other.transform.parent);
-                controller.Move(new Vector3(-hit.moveDirection.x, 0, -hit.moveDirection.z) * Time.deltaTime * 100);
+                controller.Move(new Vector3(-hit.moveDirection.x, 0, -hit.moveDirection.z * zSpeed) * Time.deltaTime * 100);
             }
             CharacterController otherController = other.GetComponent<CharacterController>();
             if(otherController)

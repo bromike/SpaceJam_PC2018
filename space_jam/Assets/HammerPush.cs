@@ -43,7 +43,7 @@ public class HammerPush : MonoBehaviour
 
         if (cc)
         {
-            dashDirection = new Vector3(-parent.transform.right.z, 0, parent.transform.right.x) * Time.deltaTime * hammerForce;
+            dashDirection = new Vector3(-parent.transform.right.z, 0, parent.transform.right.x * 1.3f) * Time.deltaTime * hammerForce;
             Invoke("ResetDash", dashTime / 1000.0f);
             dashActive = true;
         }
