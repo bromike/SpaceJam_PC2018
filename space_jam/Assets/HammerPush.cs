@@ -17,16 +17,6 @@ public class HammerPush : MonoBehaviour
         parent = transform.root.gameObject;
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        Debug.Log("OnCollisionEnter collision");
-    }
-
-    void OnCollisionEnter(Collider col)
-    {
-        Debug.Log("OnCollisionEnter collider");
-    }
-
     void Update()
     {
         if (dashActive && cc)
