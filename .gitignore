@@ -4,6 +4,7 @@ space_jam/[Oo]bj/
 space_jam/[Bb]uild/
 space_jam/[Bb]uilds/
 space_jam/Assets/AssetStoreTools*
+/space_jam/Library/*
 
 # Visual Studio 2015 cache directory
 space_jam/.vs/
